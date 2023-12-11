@@ -34,7 +34,10 @@ pipeline {
         stage("Quality Gate") {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+                    if (qg.status != 'SUCCESS') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
                 }
             }
         } 
@@ -49,6 +52,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'registry-credentials',
                     usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
+                        sh "chmod 777 ./mvnw"
                         sh "./mvnw jib:build -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD -Djib.to.tags=${GIT_SHA_SHORT}"
                     }
                 }
