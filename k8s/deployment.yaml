@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: balance-service
+  labels:
+    app: balanceservice
+spec:
+  replicas: 2
+  strategy:
+     type: RollingUpdate
+  selector:
+    matchLabels:
+      app: balanceservice
+  template:
+    metadata:
+      labels:
+        app: balanceservice
+    spec:
+      containers:
+        - name: balanceservice
+          image: ##REGISTRY_USERNAME##/balance-service:##TAG##
+          livenessProbe:
+            httpGet:
+              port: 3248
+              path: /balance-service/v1/actuator/health/liveness
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              port: 3248
+              path: /balance-service/v1/actuator/health/readiness
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          ports:
+            - containerPort: 3248

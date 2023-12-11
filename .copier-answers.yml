@@ -1,0 +1,20 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+CI: 'Yes'
+CI_type: Jenkins
+_commit: a77ef85
+_src_path: https://github.com/MallikarjunaReddyN/copier-springboot.git
+aks: 'Yes'
+container_registery: DockerHub
+created_by: Malli
+docker: 'Yes'
+entity: Balance
+group_id: com.malli
+is_db_required: 'No'
+project: Maven
+project_description: This is a Spring Boot Balance Microservice
+project_name: Balance Service
+project_package: balanceservice
+sca: 'Yes'
+sca_type: SonarCloud
+server_port: 3248
+version: 0.0.1
