@@ -63,7 +63,7 @@ pipeline {
             }
             steps {
                 dir("${env.WORKSPACE}/k8s") {
-                    sh "sed -ie 's/##TAG##/$BUILD_NUMBER/g' deployment.yaml"
+                    sh "sed -ie 's/##TAG##/${GIT_SHA_SHORT}/g' deployment.yaml"
                     sh "cat deployment.yaml"
                 }
 
