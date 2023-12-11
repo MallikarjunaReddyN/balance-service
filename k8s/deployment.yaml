@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: balanceservice
-          image: ##REGISTRY_USERNAME##/balance-service:##TAG##
+          image: mallireddy1998/balance-service:##TAG##
           livenessProbe:
             httpGet:
               port: 3248
