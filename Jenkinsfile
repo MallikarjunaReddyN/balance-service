@@ -32,10 +32,9 @@ pipeline {
             }
         }
         stage("Quality Gate") {
-            timeout(time: 5, unit: 'MINUTES') {
-            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-                if (qg.status != 'SUCCESS') {
-                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
         } 
